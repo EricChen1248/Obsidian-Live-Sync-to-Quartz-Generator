@@ -1,0 +1,9 @@
+# docker-compose.yml
+version: "3.9"
+services:
+  sync-to-quartz:
+    build: .
+    volumes:
+       - ./public:/content/public
+    env_file:
+      - .env

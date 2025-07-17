@@ -31,9 +31,12 @@ for doc in res.json()['rows']:
         if doc['id'].endswith(tuple(exclude_extensions)):
             continue
         
-        print(f'Syncing {doc["id"]}')
         path = urllib.parse.quote_plus(doc['id'])
         doc_data = requests.get(f'{host}/{database}/{path}', auth=auth).json()
+        if 'deleted' in doc_data:
+            continue
+
+        print(f'Syncing {doc["id"]}')
         if 'children' in doc_data:
             # if 'children' is missing, that means the file is empty(?) no reason to create the empty file.
 
